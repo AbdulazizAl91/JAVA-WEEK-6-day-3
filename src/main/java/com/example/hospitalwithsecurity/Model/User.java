@@ -32,6 +32,7 @@ public class User implements UserDetails {
     @Column(columnDefinition = "varchar(225) not null")
     private String password;
     @Pattern(regexp = "PATIENT|CLINIC|ADMISSION",message = "chose ADMISSION , CLINIC,PATIENT")
+    @Column(columnDefinition = "varchar(25) not null")
     private String role;
 
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "user")
