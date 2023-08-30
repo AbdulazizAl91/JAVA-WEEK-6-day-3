@@ -1,6 +1,9 @@
 package com.example.hospitalwithsecurity.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +24,14 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty(message = "user name should not empty")
+    @Size(min = 4,max = 20,message = "username should be between 4 and 20")
+    @Column(columnDefinition = "varchar(20) not null unique")
     private String username;
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,225}$",message = "password should has small letters, capital letters and numbers")
+    @Column(columnDefinition = "varchar(225) not null")
     private String password;
+    @Pattern(regexp = "PATIENT|CLINIC|ADMISSION",message = "chose ADMISSION , CLINIC,PATIENT")
     private String role;
 
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "user")
